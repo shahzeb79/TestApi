@@ -24,3 +24,24 @@ stages:
     - script: dotnet test --no-restore --verbosity normal
       displayName: 'dotnet test'
 
+- stage: BuildContainers
+  displayName: 'Build Containers'
+  jobs:
+  - job: BuildContainers
+    displayName: 'Build Containers'
+    pool:
+      name: testPool
+    steps:
+    - task: Docker@2
+      displayName: Login to Docker Hub
+      inputs:
+        command: login
+        containerRegistry: dockerRegistry
+    - task: Docker@2
+      displayName: Build and Push
+      inputs:
+        command: buildAndPush
+        Dockerfile: 'Dockerfile'
+        repository: shahzeb799/nginx
+        tags: |
+          0.1
