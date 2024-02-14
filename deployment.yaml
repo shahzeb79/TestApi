@@ -28,7 +28,7 @@ metadata:
   labels:
     app: webapi
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: webapi
