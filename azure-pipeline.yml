@@ -49,8 +49,8 @@ stages:
       displayName: Build and Push WebApi
       inputs:
         command: buildAndPush
-        buildContext: '$(Agent.BuildDirectory)/TestApi'
-        Dockerfile: '$(Agent.BuildDirectory)/TestApi/Dockerfile'
+        buildContext: 'TestApi'
+        Dockerfile: 'TestApi/Dockerfile'
         repository: shahzeb799/testapi
         tags: |
           latest
