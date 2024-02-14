@@ -9,6 +9,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
+  sessionAffinity: None
   type: LoadBalancer  # Change to NodePort if LoadBalancer is not available
 
 ---
