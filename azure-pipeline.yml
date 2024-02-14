@@ -63,6 +63,8 @@ stages:
       name: testPool
     steps:
     - script: |
-            ls -l
-            kubectl get pods
+            dir
+            kubectl get deployments
+            kubectl apply -f .\deployment.yaml
+            kubectl apply -f .\service.yaml
       workingDirectory: $(Agent.BuildDirectory) # Start the script with this working directory.
