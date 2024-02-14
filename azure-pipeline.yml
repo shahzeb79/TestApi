@@ -54,3 +54,15 @@ stages:
         repository: shahzeb799/testapi
         tags: |
           latest
+- stage: Deploy
+  displayName: 'Deploy To Kubernetes'
+  jobs:
+  - job: Deploy
+    displayName: 'Deploy To Kubernetes'
+    pool:
+      name: testPool
+    steps:
+    - script: |
+            ls -l
+            kubectl get pods
+      workingDirectory: $(Agent.BuildDirectory) # Start the script with this working directory.
