@@ -38,10 +38,18 @@ stages:
         command: login
         containerRegistry: dockerRegistry
     - task: Docker@2
-      displayName: Build and Push
+      displayName: Build and Push Nginx
       inputs:
         command: buildAndPush
         Dockerfile: 'Dockerfile'
         repository: shahzeb799/nginx
         tags: |
-          0.1
+          latest
+    - task: Docker@2
+      displayName: Build and Push WebApi
+      inputs:
+        command: buildAndPush
+        Dockerfile: 'Dockerfile'
+        repository: shahzeb799/testapi
+        tags: |
+          latest
