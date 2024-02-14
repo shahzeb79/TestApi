@@ -63,7 +63,8 @@ stages:
       name: testPool
     steps:
     - script: |
-            dir
             kubectl get deployments
+            kubectl delete deployment nginx-deployment
+            kubectl delete deployment webapi-deployment
             kubectl apply -f .\deployment.yaml
             kubectl apply -f .\service.yaml
