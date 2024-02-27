@@ -44,7 +44,7 @@ stages:
         Dockerfile: 'Dockerfile'
         repository: shahzeb799/nginx
         tags: |
-          $(Build.BuildId)
+          build-$(Build.BuildId)
     - task: Docker@2
       displayName: Build and Push WebApi
       inputs:
@@ -53,7 +53,7 @@ stages:
         Dockerfile: 'TestApi/Dockerfile'
         repository: shahzeb799/testapi
         tags: |
-          $(Build.BuildId)
+          build-$(Build.BuildId)
 - stage: Deploy
   displayName: 'Deploy To Kubernetes'
   jobs:
