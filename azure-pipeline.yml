@@ -24,43 +24,57 @@ stages:
     - script: dotnet test --no-restore --verbosity normal
       displayName: 'dotnet test'
 
-- stage: BuildContainers
-  displayName: 'Build Containers'
-  jobs:
-  - job: BuildContainers
-    displayName: 'Build Containers'
-    pool:
-      name: testPool
-    steps:
-    - task: Docker@2
-      displayName: Login to Docker Hub
-      inputs:
-        command: login
-        containerRegistry: dockerRegistry
-    - task: Docker@2
-      displayName: Build and Push Nginx
-      inputs:
-        command: buildAndPush
-        Dockerfile: 'Dockerfile'
-        repository: shahzeb799/nginx
-        tags: |
-          build-$(Build.BuildId)
-    - task: Docker@2
-      displayName: Build and Push WebApi
-      inputs:
-        command: buildAndPush
-        buildContext: 'TestApi'
-        Dockerfile: 'TestApi/Dockerfile'
-        repository: shahzeb799/testapi
-        tags: |
-          build-$(Build.BuildId)
+# - stage: BuildContainers
+#   displayName: 'Build Containers'
+#   jobs:
+#   - job: BuildContainers
+#     displayName: 'Build Containers'
+#     pool:
+#       name: testPool
+#     steps:
+#     - task: Docker@2
+#       displayName: Login to Docker Hub
+#       inputs:
+#         command: login
+#         containerRegistry: dockerRegistry
+#     - task: Docker@2
+#       displayName: Build and Push Nginx
+#       inputs:
+#         command: buildAndPush
+#         Dockerfile: 'Dockerfile'
+#         repository: shahzeb799/nginx
+#         tags: |
+#           build-$(Build.BuildId)
+#     - task: Docker@2
+#       displayName: Build and Push WebApi
+#       inputs:
+#         command: buildAndPush
+#         buildContext: 'TestApi'
+#         Dockerfile: 'TestApi/Dockerfile'
+#         repository: shahzeb799/testapi
+#         tags: |
+#           build-$(Build.BuildId)
 - stage: Deploy
-  displayName: 'Deploy To Kubernetes'
+  displayName: 'Update Manifests'
   jobs:
   - job: Deploy
-    displayName: 'Deploy To Kubernetes'
+    displayName: 'Update Manifests'
     pool:
       name: testPool
     steps:
     - script: |
-            kubectl get deployments
+            TAG=$(Build.BuildId)
+            ((TAG--))
+            git clone https://github.com/shahzeb79/Kube_Manifest_TestApi.git
+            git config --global user.email "shahzeb79@yahoo.com"
+            git config --global user.name "shahzeb"
+            pwd
+            cd Kube_Manifest_TestApi
+            pwd
+            echo $TAG
+            sed -i "s/build-.*/build-$TAG/g" manifest/deployment.yaml
+            cat manifest/deployment.yaml
+            git add .
+            git commit -m "new build with imgTag build-$TAG"
+            git config credential.helper 'cache --timeout=120'
+            git push -q https://$(github.token)@github.com/shahzeb79/Kube_Manifest_TestApi.git main 
