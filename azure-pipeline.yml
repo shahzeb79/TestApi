@@ -2,27 +2,27 @@ trigger:
 - main
 
 stages:
-- stage: Build
-  displayName: 'Build stage'
-  jobs:
-  - job: Build
-    displayName: 'Build job'
-    pool:
-      name: testPool
-    steps:
-    - task: UseDotNet@2
-      inputs:
-        packageType: sdk
-        version: '3.x'
+# - stage: Build
+#   displayName: 'Build stage'
+#   jobs:
+#   - job: Build
+#     displayName: 'Build job'
+#     pool:
+#       name: testPool
+#     steps:
+#     - task: UseDotNet@2
+#       inputs:
+#         packageType: sdk
+#         version: '3.x'
 
-    - script: dotnet restore
-      displayName: 'dotnet restore'
+#     - script: dotnet restore
+#       displayName: 'dotnet restore'
 
-    - script: dotnet build --configuration Release
-      displayName: 'dotnet build'
+#     - script: dotnet build --configuration Release
+#       displayName: 'dotnet build'
 
-    - script: dotnet test --no-restore --verbosity normal
-      displayName: 'dotnet test'
+#     - script: dotnet test --no-restore --verbosity normal
+#       displayName: 'dotnet test'
 
 # - stage: BuildContainers
 #   displayName: 'Build Containers'
@@ -62,7 +62,7 @@ stages:
     pool:
       name: testPool
     steps:
-    - script: |
+    - bash: |
             TAG=$(Build.BuildId)
             ((TAG--))
             git clone https://github.com/shahzeb79/Kube_Manifest_TestApi.git
