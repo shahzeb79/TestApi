@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: shahzeb799/nginx:build-38
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapi-deployment
+  labels:
+    app: webapi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webapi
+  template:
+    metadata:
+      labels:
+        app: webapi
+    spec:
+      containers:
+        - name: webapi
+          image: shahzeb799/testapi:build-38
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: NGINX
+              value: "http://nginx:80"  # Adjust to your Nginx service name and port
