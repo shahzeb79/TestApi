@@ -68,10 +68,7 @@ stages:
             git clone https://github.com/shahzeb79/Kube_Manifest_TestApi.git
             git config --global user.email "shahzeb79@yahoo.com"
             git config --global user.name "shahzeb"
-            pwd
             cd Kube_Manifest_TestApi
-            pwd
-            ls
             echo $TAG
             sed -i "s/build-.*/build-$TAG/g" manifest/deployment.yaml
             cat manifest/deployment.yaml
