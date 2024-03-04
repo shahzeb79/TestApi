@@ -38,7 +38,9 @@ The final solution consists of 3 parts:
 - AKS Cluster provision using Terraform via [AzureDevops](https://github.com/shahzeb79/terraform)
 
 This whole prcess is controlled via code in github repor. Any changes to application source code will trigger CI pipeline in Azure Devops which will deploy final container to Docker registry. CI pipeline will also update our deployment manifests in another github repo. The update of manifests in deployment repo will automatically trigger ArgoCD job that will deploy our containers to kubernetes.
+
 The API is exposed via AKS loadbalancer on kubernetes service and can be accessed via http://98.67.234.212/weatherforecast
+
 All above links require authorization, and access can be granted upon request.
 
 ## Build Docker Images
@@ -67,6 +69,7 @@ After that, you can push images to container registry using following commands (
 ### Links to docker images:
 
 https://hub.docker.com/r/shahzeb799/testapi
+
 https://hub.docker.com/r/shahzeb799/nginx
 
 
