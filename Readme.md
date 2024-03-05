@@ -36,6 +36,7 @@ The final solution consists of 3 parts:
 - CI of .Net app via [AzureDevops](https://dev.azure.com/shahzeb799/TestApi/_build?definitionId=1)
 - CD of .Net app to AKS cluster via [ArgoCD](https://github.com/shahzeb79/Kube_Manifest_TestApi)
 - AKS Cluster provision using Terraform via [AzureDevops](https://github.com/shahzeb79/terraform)
+- ArgoCD [Dashboard](https://98.67.216.13/applications) for app managment (username: admin)
 
 This whole prcess is controlled via code in github repor. Any changes to application source code will trigger CI pipeline in Azure Devops which will deploy final container to Docker registry. CI pipeline will also update our deployment manifests in another github repo. The update of manifests in deployment repo will automatically trigger ArgoCD job that will deploy our containers to kubernetes.
 
